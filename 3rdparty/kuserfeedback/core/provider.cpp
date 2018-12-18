@@ -73,7 +73,7 @@ ProviderPrivate::ProviderPrivate(Provider *qq)
     , encouragementInterval(-1)
 {
     submissionTimer.setSingleShot(true);
-    QObject::connect(&submissionTimer, SIGNAL(timeout()), q, SLOT(submit()));
+    QObject::connect(&submissionTimer, &QTimer::timeout, q, &Provider::submit);
 
     startTime.start();
 

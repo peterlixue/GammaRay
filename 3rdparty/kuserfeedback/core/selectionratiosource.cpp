@@ -100,6 +100,7 @@ SelectionRatioSource::SelectionRatioSource(QItemSelectionModel* selectionModel, 
     Q_ASSERT(selectionModel);
 
     d->monitor.reset(new SelectionMonitor(d));
+    // FIXME: Use proper type for d->monitor, instead of relying on runtime-connect with a QObject*
     QObject::connect(selectionModel, SIGNAL(selectionChanged(QItemSelection,QItemSelection)), d->monitor.get(), SLOT(selectionChanged()));
     d->lastChangeTime.start();
     d->selectionChanged();

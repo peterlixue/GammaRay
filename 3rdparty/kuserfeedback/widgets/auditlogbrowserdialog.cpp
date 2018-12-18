@@ -32,12 +32,13 @@ AuditLogBrowserDialog::AuditLogBrowserDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->logEntryBox, SIGNAL(activated(int)), this, SLOT(logEntrySelected()));
+    connect(ui->logEntryBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated),
+            this, &AuditLogBrowserDialog::logEntrySelected);
 
     auto clearButton = ui->buttonBox->button(QDialogButtonBox::Discard);
     Q_ASSERT(clearButton);
     clearButton->setText(tr("Delete Log"));
-    connect(clearButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(clearButton, &QAbstractButton::clicked, this, &QWidget::close);
 
     setEnabled(false);
 }
@@ -54,7 +55,7 @@ void AuditLogBrowserDialog::setUiController(AuditLogUiController *controller)
     logEntrySelected();
 
     auto clearButton = ui->buttonBox->button(QDialogButtonBox::Discard);
-    connect(clearButton, SIGNAL(clicked()), controller, SLOT(clear()));
+    connect(clearButton, &QAbstractButton::clicked, controller, &AuditLogUiController::clear);
 
     setEnabled(true);
 }
